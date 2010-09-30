@@ -1,0 +1,128 @@
+
+
+dcf77.c - Das Clock Fake @ 77.5 kHz
+
+
+(c) 2003 by Matthias Wenzel, maZZoo NO @ SPAM gmx.de
+
+         licensed under the GPLv2,
+         see http://www.gnu.org/copyleft/gpl.html
+
+
+>>>>>>>> this code is still very BETA, please          <<<<<<<<
+>>>>>>>> report sucesses, improvements or ideas to me  <<<<<<<<
+
+
+what's it ?
+###########
+
+This program paints black and white stripes on your screen. Your monitor
+will now emit electromagnetic waves. Basically a carrier frequency of
+77500 Hz. In Europe commonly used DCF77-radio-clocks will tune into that
+frequency and listen ... to be honest, only if they're close enough to
+your monitor they may/might.
+The screen image will be modulated to emit the 59 information bits plus
+the one sync bit per minute. Actually we only need to switch between two
+static images once per second, but with a high timing precision of about
+50ms. Nothing evil will happen to your monitor or LCD, we're not playing
+with your modelines or the sync of your monitor.
+The program uses the SDL-library to acess the screen, this can be a
+problem when you don't have HW-acceleration - I had to switch back to
+16bpp on my X to get the required 20fps.
+The program now tests wether the screen performance is sufficient to
+achieve the required 20 fps.
+
+
+compiling
+#########
+
+do a 'make' and hope the best ...
+you'll need the SDL-libraries installed, see http://www.libsdl.org/
+
+
+running
+#######
+
+options:
+    -v       verbose
+    -f       force. don't run fps performance test
+    -y nn    set year    to nn
+    -M nn    set month   to nn
+    -w n     set weekday to n
+    -d nn    set day     to nn
+    -h nn    set hour    to nn
+    -m nn    set minute  to nn
+
+
+if no parameters are given, time will start at 23:23, your
+clock might tune in by 23:42
+
+
+
+problems
+########
+
+ o this software is in a battle with a 50kW hardware. we probably need to
+   test more and play with different modulation schemes to improve
+   emission on more screens.
+ o as of now, I only tested this program with the LCD of my laptop, but I
+   could set all the clocks I had for testing
+   Maybe for CRTs we need a different type of modulation
+ o more testing is to be done
+
+
+bugs
+####
+
+  o running with a virtual screen won't work
+  o untested on HW-accelerated X
+  o not yet seen working with a CRT !!
+  o up to now time runs forward only ;)
+
+
+misc
+####
+
+the excellent work of Erik Thiele ( http://www.erikyyy.de/tempest/ )
+inspired me to write this program.
+Tuning his code from several MHz down to 77 kHz I had to use a different
+modulation scheme (PWM) to emit the required AM-shape.
+I played with grey colors to implement the AM but no success. I picked
+the grey color to have a certain number of bits set, and switched between
+white and grey screens to implement the AM-ratio, as i suspected the
+RAMDAC-databus to emit better than my LCD. No success either.
+The first success was with a 1:3 black&white PWM-modulation.
+
+
+DCF77
+#####
+
+some useful links related to the DCF77 coding scheme:
+
+  o http://www.ptb.de/en/org/4/43/433/disse.htm
+  o http://www.prog-link.com/dcf77/dcf77-contents.html
+
+
+tempest
+#######
+
+which may be an abbreviation for 'Transient ElectroMagnetic Pulse
+Emanation STandard' but nobody knows.
+
+links on tempest:
+
+  o http://www.cl.cam.ac.uk/~mgk25/ih98-tempest.pdf
+  o http://www.shmoo.com/tempest/emr.pdf
+  o http://www.eskimo.com/~joelm/tempest.html
+
+
+history
+#######
+
+25 april 2003  dcf77-0.0.3 gcc instead of g++; options; measure fps
+                           at startup
+
+15 april 2003  dcf77-0.0.2 bugfixed, no options, LCD of my laptop sets
+                           all five available clocks 
+
+13 april 2003  dcf77-0.0.1 very experimental initial release
