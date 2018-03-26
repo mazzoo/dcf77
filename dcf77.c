@@ -60,7 +60,7 @@ int countbits_ul(unsigned long v){
   return ret;
 }
 
-inline int parity_min_hour(uint lo, uint hi){
+static inline int parity_min_hour(uint lo, uint hi){
   int ret = 0; /* even parity */
   ret ^= (lo & 1) ? 1:0;
   ret ^= (lo & 2) ? 1:0;
@@ -73,7 +73,7 @@ inline int parity_min_hour(uint lo, uint hi){
   return ret;
 }
 
-inline int parity_day_thru_year(uint daylo,   uint dayhi, uint weekday,
+static inline int parity_day_thru_year(uint daylo,   uint dayhi, uint weekday,
 				uint monthlo, uint monthhi,
 				uint yearlo,  uint yearhi ){
   int ret = 0; /* even parity */
